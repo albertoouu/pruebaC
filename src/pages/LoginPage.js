@@ -6,7 +6,6 @@ const Login = () => {
   const navigate = useNavigate()
   const auth = useAuth()
   const handleLogin = () => {
-    console.log('click')
     auth.login()
     navigate('/dashboard')
   }
