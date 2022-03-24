@@ -27,15 +27,15 @@ const HomePage = () => {
 
   useEffect(() => {
     //mounts
-    const q = query(collection(db, 'CalendarTest'))
+    const q = query(collection(db, 'Users'))
     const unsub = onSnapshot(q, (snap) => {
       const array = snap.docs.map(doc => {
         return {
           id: doc.id,
-          title: doc.get('title'),
-          start: doc.get('start').toDate(),
-          end: doc.get('end').toDate(),
-          allDay: doc.get('allDay')
+          title: doc.get('name'),
+          start: doc.get('date_start').toDate(),
+          end: doc.get('date_start').toDate(),
+          allDay: true
         }
       })
       setData([...array])
