@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { initializeApp } from 'firebase/app'
-import { getFirestore, addDoc, collection, query, onSnapshot, orderBy, startAt, endAt } from 'firebase/firestore'
+import { getFirestore, addDoc, collection, query, onSnapshot } from 'firebase/firestore'
 import firebaseConfig from '../config'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -21,19 +21,13 @@ const handleClick = e => {
   addDoc(collection(db, 'CalendarTest'), event)
 }
 
-
-
 const HomePage = () => {
 
   const [data, setData] = useState([])
-  const [range, setRange] = useState({
-    start: new Date(),
-    end: new Date()
-  })
 
   useEffect(() => {
     //mounts
-    const q = query(collection(db, 'CalendarTest'), orderBy('start'), startAt(range.start), endAt(range.end))
+    const q = query(collection(db, 'CalendarTest'))
     const unsub = onSnapshot(q, (snap) => {
       const array = snap.docs.map(doc => {
         return {
@@ -44,27 +38,26 @@ const HomePage = () => {
           allDay: doc.get('allDay')
         }
       })
-      console.log(array)
       setData([...array])
     })
     //unmounts
     return () => { unsub() }
-  }, [range])
+  }, [])
 
   const handleRangeChange = e => {
-    setRange({ start: e.start, end: e.end })
+    console.log(e)
   }
 
   return (
     <>
       <div>HomePage</div>
       <Calendar
+        onRangeChange={handleRangeChange}
         localizer={localizer}
         events={data}
         style={{ height: 500, margin: "50px" }}
         onSelectSlot={handleClick}
         selectable
-        onRangeChange={handleRangeChange}
       />
     </>
   )

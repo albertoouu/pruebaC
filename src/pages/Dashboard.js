@@ -37,7 +37,6 @@ const Dashboard = () => {
           allDay: doc.get('allDay')
         }
       })
-      console.log(array)
       setData([...array])
     })
     //unmounts
@@ -45,7 +44,7 @@ const Dashboard = () => {
   }, [range])
 
   const handleDatesSet = (e) => {
-    console.log(e)
+    //console.log(e)
     setRange({ start: e.start, end: e.end })
   }
 
