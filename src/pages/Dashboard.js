@@ -68,7 +68,6 @@ const Dashboard = () => {
       })
       const allDays = array.concat(payDays)
       setData([...allDays])
-      console.log(data)
     })
     //unmounts
     return () => { unsub() }
